@@ -1,0 +1,19 @@
+# Check out https://docs.codemagic.io/yaml/building-a-native-android-app/ for more information
+
+workflows:
+  android_qa:
+    name: Run tests and build debug apk
+    cache:
+      cache_paths:
+        - $HOME/.gradle/caches
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: '*'
+      cancel_previous_builds: true
+    scripts:
+      - ./gradlew test
+      - ./gradlew assembleDebug
+    artifacts:
+      - app/build/outputs/**/*.apk
